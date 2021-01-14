@@ -1,5 +1,7 @@
 
 import React, { useState } from 'react'
+import Form from './components/Form'
+import RenderPeople from './components/RenderPeople'
 
 const App = () => {
 
@@ -56,27 +58,15 @@ const App = () => {
           onChange={handleFilterChange}/>
       </div>
       <h2>Add a new phone number</h2>
-      <form onSubmit={addName}>
-        <div>
-          name: <input 
-            value={newName}
-            onChange={handleNameChange}
-          />
-        </div>
-        <div>
-          number: <input 
-            value={newNumber}
-            onChange={handleNumberChange}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <Form 
+        addName={addName} 
+        newName={newName}
+        handleNameChange={handleNameChange}
+        newNumber={newNumber}
+        handleNumberChange={handleNumberChange}
+      />
       <h2>Numbers</h2>
-      <div>
-          {filteredPersons.map(person =>
-            <p key={person.name}>{person.name} {person.number}</p>)}
-      </div>
+      <RenderPeople filteredPersons={filteredPersons} />
     </div>
   )
 }
