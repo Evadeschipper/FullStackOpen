@@ -1,5 +1,5 @@
 
-import CountryDisplay from './components/CountryDisplay'
+import FilteredPage from './components/FilteredPage'
 import './App.css';
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
@@ -34,7 +34,7 @@ function App() {
           onChange={handleFilterChange}
         />
       </p>
-      <CountryDisplay filteredCountries={filteredCountries} />
+      <FilteredPage filteredCountries={filteredCountries} />
     </div>
   );
 }
