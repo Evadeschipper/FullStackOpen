@@ -18,13 +18,6 @@ const WeatherDisplay = (props) => {
             })
       }, [weatherQuery])
 
-    /* 
-    weatherData.current.temperature
-    weatherData.current.weather_icons ([])
-    weatherData.current.wind_speed
-    weatherData.current.wind_dir
-    */
-
     if (weatherData === undefined) {
         return <></>
     } else {
