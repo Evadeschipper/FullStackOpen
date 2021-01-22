@@ -1,8 +1,10 @@
 
+import WeatherDisplay from './WeatherDisplay'
+
 const CountryDisplay = (props) => {
 
     const {country} = props
-
+        
     return (
         <div>
             <h1>{country.name}</h1>
@@ -18,6 +20,7 @@ const CountryDisplay = (props) => {
                 width={160}
                 height={120}
             />
+            <WeatherDisplay country={country} />
         </div>
     )
 }
