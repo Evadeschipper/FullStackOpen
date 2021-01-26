@@ -1,16 +1,16 @@
 
-import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import Form from './components/Form'
 import RenderPeople from './components/RenderPeople'
+import * as numberService from './services/numberService'
 
 const App = () => {
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/db')
-      .then(response => {
-        setPersons(response.data.persons)
+    numberService
+      .getAll()
+      .then(initialNumbers => {
+        setPersons(initialNumbers)
       })
   }, [])
 
@@ -28,15 +28,21 @@ const App = () => {
       if (persons.map(person => person.name).includes(newName)) {
         alert(`${newName} is already added to phonebook`)
       } else {
-        const nameObject = {
+
+        const numberObject = {
             name: newName,
             number: newNumber
         }
-  
-        setPersons(persons.concat(nameObject))
-        
-        setNewName('')
-        setNewNumber('')
+
+        numberService
+          .create(numberObject)
+          .then(returnedNumber => {
+            setPersons(persons.concat(returnedNumber))
+            setNewName('')
+            setNewNumber('')
+          }) 
+
+
       }
   }
 
