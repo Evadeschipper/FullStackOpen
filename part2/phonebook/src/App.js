@@ -75,7 +75,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
-      <RenderPeople filteredPersons={filteredPersons} />
+      <RenderPeople filteredPersons={filteredPersons} setPersons={setPersons} />
     </div>
   )
 }
