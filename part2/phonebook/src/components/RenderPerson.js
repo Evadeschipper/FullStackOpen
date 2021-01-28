@@ -7,7 +7,9 @@ const RenderPerson = (props) => {
 
     const deleteHandler = (event) => {
 
-        numberService
+        if (window.confirm(`Delete ${person.name} from your phonebook?`)) {
+
+            numberService
             .deletePerson(person.id)
             .then(() => {
                 numberService
@@ -16,8 +18,8 @@ const RenderPerson = (props) => {
                         setPersons(numbers)
                     })
             })
-        
-        
+
+        }    
             
     }
 
