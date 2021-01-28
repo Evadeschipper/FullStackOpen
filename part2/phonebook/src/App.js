@@ -23,16 +23,36 @@ const App = () => {
   const filteredPersons = persons.filter(person => regex.test(person.name.toLowerCase()))
 
   const addName = (event) => {
-      event.preventDefault()
+      
+    event.preventDefault()
+
+      const numberObject = {
+        name: newName,
+        number: newNumber
+      }
 
       if (persons.map(person => person.name).includes(newName)) {
-        alert(`${newName} is already added to phonebook`)
-      } else {
+        
+        if (window.confirm(`${newName} is already added to phonebook. Replace the old number with a new one?`)) {
 
-        const numberObject = {
-            name: newName,
-            number: newNumber
+          const id = persons.find(p => p.name === newName).id
+          
+          numberService
+            .update(id, numberObject)
+            .then(() => {
+              
+              numberService
+                  .getAll()
+                  .then(numbers => {
+                      setPersons(numbers)
+                  })
+                
+              setNewName('')
+              setNewNumber('')
+              
+            })
         }
+      } else {
 
         numberService
           .create(numberObject)
