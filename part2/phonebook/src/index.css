@@ -13,11 +13,23 @@ code {
 }
 
 .message {
-  color: maroon;
+  color: midnightblue;
   font-size: large;
   background: ivory;
   border-radius: 5px;
   padding: 10px;
   border-style: groove;
+  margin: 10px;
+}
+
+.error {
+  color: maroon;
+  font-size: large;
+  font-style: italic;
+  background: ivory;
+  border-radius: 5px;
+  padding: 10px;
+  border-color: maroon;
+  border-width: 2px;
   margin: 10px;
 }

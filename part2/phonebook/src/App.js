@@ -3,19 +3,8 @@ import React, { useState, useEffect } from 'react'
 import Form from './components/Form'
 import RenderPeople from './components/RenderPeople'
 import * as numberService from './services/numberService'
-
-const Notification = ({ message }) => {
-  
-  if (message === null) {
-    return null
-  }
-
-  return (
-    <div className="message">
-      {message}
-    </div>
-  )
-}
+import Notification from './components/Notification'
+import ErrorMessage from './components/ErrorMessage'
 
 const App = () => {
 
@@ -32,6 +21,7 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState('')
   const [ newFilter, setNewFilter ] = useState('')
   const [ notification, setNotification ] = useState(null)
+  const [ errorMessage, setErrorMessage ] = useState(null)
 
   const regex = RegExp(newFilter.toLowerCase())
   const filteredPersons = persons.filter(person => regex.test(person.name.toLowerCase()))
@@ -56,10 +46,10 @@ const App = () => {
             .then(() => {
               
               numberService
-                  .getAll()
-                  .then(numbers => {
-                      setPersons(numbers)
-                  })
+                .getAll()
+                .then(numbers => {
+                    setPersons(numbers)
+                })
               
               setNotification(
                 `The number for ${newName} was changed to ${newNumber}`
@@ -73,8 +63,23 @@ const App = () => {
               setNewNumber('')
               
             })
-          
+            .catch(error => {
+              
+              setErrorMessage(
+                `${newName} no longer exists on the server.`
+              )
 
+              setTimeout(() => {
+                setErrorMessage(null)
+              }, 5000)   
+
+              numberService
+                .getAll()
+                .then(numbers => {
+                  setPersons(numbers)
+                })
+
+            })
 
         }
       } else {
@@ -128,6 +133,7 @@ const App = () => {
         newNumber={newNumber}
         handleNumberChange={handleNumberChange}
       />
+      <ErrorMessage message={errorMessage}/>
       <Notification message={notification} />
       <h2>Numbers</h2>
       <RenderPeople filteredPersons={filteredPersons} setPersons={setPersons} />
