@@ -4,6 +4,19 @@ import Form from './components/Form'
 import RenderPeople from './components/RenderPeople'
 import * as numberService from './services/numberService'
 
+const Notification = ({ message }) => {
+  
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div className="message">
+      {message}
+    </div>
+  )
+}
+
 const App = () => {
 
   useEffect(() => {
@@ -18,6 +31,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ newFilter, setNewFilter ] = useState('')
+  const [ notification, setNotification ] = useState(null)
 
   const regex = RegExp(newFilter.toLowerCase())
   const filteredPersons = persons.filter(person => regex.test(person.name.toLowerCase()))
@@ -46,11 +60,22 @@ const App = () => {
                   .then(numbers => {
                       setPersons(numbers)
                   })
-                
+              
+              setNotification(
+                `The number for ${newName} was changed to ${newNumber}`
+              )
+    
+              setTimeout(() => {
+                setNotification(null)
+              }, 5000)    
+
               setNewName('')
               setNewNumber('')
               
             })
+          
+
+
         }
       } else {
 
@@ -58,6 +83,15 @@ const App = () => {
           .create(numberObject)
           .then(returnedNumber => {
             setPersons(persons.concat(returnedNumber))
+
+            setNotification(
+              `${newName} was added to the phonebook.`
+            )
+
+            setTimeout(() => {
+              setNotification(null)
+            }, 3000)  
+
             setNewName('')
             setNewNumber('')
           }) 
@@ -94,6 +128,7 @@ const App = () => {
         newNumber={newNumber}
         handleNumberChange={handleNumberChange}
       />
+      <Notification message={notification} />
       <h2>Numbers</h2>
       <RenderPeople filteredPersons={filteredPersons} setPersons={setPersons} />
     </div>
